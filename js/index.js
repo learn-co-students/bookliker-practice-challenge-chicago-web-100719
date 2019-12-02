@@ -1,20 +1,20 @@
 const booksUrl = 'http://localhost:3000/books'
 const usersUrl = 'http://localhost:3000/users'
 const showPanel = document.getElementById('show-panel')
-const list = document.getElementById('list')
+const bookList = document.getElementById('list')
 
 //main
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
   fetchBooks()
 
-  list.addEventListener('click', function(event) {
+  bookList.addEventListener('click', (event) => {
     let bookId = event.target.id
     fetch(`${booksUrl}/${bookId}`)
     .then(resp => resp.json())
     .then(book => renderBook(book))
   })
 
-  showPanel.addEventListener('click', function(event) {
+  showPanel.addEventListener('click', (event) => {
     if (event.target.id === 'button')
       fetch(`${booksUrl}/${event.target.dataset.id}`)
         .then(resp => resp.json())
@@ -37,12 +37,13 @@ function listBook(book) {
   const li = document.createElement('li')
   li.innerText = book.title
   li.setAttribute('id', `${book.id}`)
-  list.appendChild(li)
+  bookList.appendChild(li)
 }
 
-//rendering books functions
+//rendering book functions
 function renderBook(book) {
   const users = book.users
+  showPanel.innerHTML = ''
   showPanel.innerHTML = `<img src=${book.img_url}>
                         <p>${book.description}</p>
                         <ul id="users-list"></ul>
